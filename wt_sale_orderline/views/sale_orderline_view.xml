@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_order_line_tree_extended" model="ir.ui.view">
+        <field name="name">view.order.line.tree.extended</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_delivered']" position="after">
+                <field name="qty_remained" invisible='1'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_pending_orderline" model="ir.actions.act_window">
+        <field name="name">Orderline</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_delivered', '=', False)]</field>
+    </record>
+    
+    <menuitem id="menu_pending_orderline"
+            name="Pending OrderLine"
+            action="action_pending_orderline"
+            parent="sale.menu_sale_report"
+            sequence="1"/>
+</odoo>
