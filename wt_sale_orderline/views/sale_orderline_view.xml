@@ -8,6 +8,40 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='qty_delivered']" position="after">
                 <field name="qty_remained" invisible='1'/>
+                <field name="remaining_valuation"/>
+                <field name="done_valuation"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_extended" model="ir.ui.view">
+        <field name="name">view.order.tree.extended</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_delivered_fully"/>
+                <field name="temp_bool"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name='decoration-success'>is_delivered_fully==True</attribute>
+                <attribute name='decoration-danger'>is_delivered_fully==False</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_with_onboarding_extended" model="ir.ui.view">
+        <field name="name">view.quotation.tree.with.onboarding</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_delivered_fully"/>
+                <field name="temp_bool"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name='decoration-success'>is_delivered_fully==True</attribute>
+                <attribute name='decoration-danger'>is_delivered_fully==False</attribute>
             </xpath>
         </field>
     </record>
