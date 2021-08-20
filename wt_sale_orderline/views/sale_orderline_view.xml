@@ -14,14 +14,27 @@
         </field>
     </record>
 
+    <record id="view_order_form_extended" model="ir.ui.view">
+        <field name="name">view.order.form.extended</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <button name="action_draft" position="after">
+                <button name="action_mark_as_done" type="object" string="Mark Done"
+                    attrs="{'invisible': [('state', 'not in', 'sale')]}"
+                    />
+            </button>
+        </field>
+    </record>
+
     <record id="view_order_tree_extended" model="ir.ui.view">
         <field name="name">view.order.tree.extended</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="is_delivered_fully"/>
-                <field name="temp_bool"/>
+                <field name="is_delivered_fully" invisible='0'/>
+                <field name="temp_bool" invisible='1'/>
             </field>
             <xpath expr="//tree" position="attributes">
                 <attribute name='decoration-success'>is_delivered_fully==True</attribute>
@@ -36,8 +49,8 @@
         <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="is_delivered_fully"/>
-                <field name="temp_bool"/>
+                <field name="is_delivered_fully" invisible='1'/>
+                <field name="temp_bool" invisible='1'/>
             </field>
             <xpath expr="//tree" position="attributes">
                 <attribute name='decoration-success'>is_delivered_fully==True</attribute>
