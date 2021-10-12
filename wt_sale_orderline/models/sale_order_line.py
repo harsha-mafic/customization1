@@ -44,3 +44,4 @@ class SaleOrder(models.Model):
         self.picking_ids.filtered(lambda x: x.state not in ['done', 'cancel']).action_cancel()
         for rec in self.order_line:
             rec.is_delivered = True
+            rec.is_delivered_fully = True
