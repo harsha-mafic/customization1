@@ -42,5 +42,5 @@ class SaleOrder(models.Model):
 
     def action_mark_as_done(self):
         self.picking_ids.filtered(lambda x: x.state not in ['done', 'cancel']).action_cancel()
-        for rec in order.order_line:
-            rec.is_delivered = True
+#         for rec in order.order_line:
+#             rec.is_delivered = True
