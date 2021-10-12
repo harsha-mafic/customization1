@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     is_delivered_fully = fields.Boolean()
-    temp_bool = fields.Boolean(compute='_check_delivery_status')
+    temp_bool = fields.Boolean()
 
 #     def _check_delivery_status(self):
 #         for order in self:
