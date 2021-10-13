@@ -23,24 +23,26 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     is_delivered_fully = fields.Boolean()
-    temp_bool = fields.Boolean(compute='_check_delivery_status')
+    temp_bool = fields.Boolean()
 
-    def _check_delivery_status(self):
-        for order in self:
-            order.is_delivered_fully = False
-            flag = 1
-            for rec in order.order_line:
-                rec.is_delivered = False
-                if (rec.qty_delivered >= rec.product_uom_qty) and rec.state not in ['sent', 'draft', 'cancel']:
-                    rec.is_delivered = True
-                else:
-                    flag = 0
-                    break
-            if flag and order.order_line:
-                order.is_delivered_fully = True
-            order.temp_bool = True
+#     def _check_delivery_status(self):
+#         for order in self:
+#             order.is_delivered_fully = False
+#             flag = 1
+#             for rec in order.order_line:
+#                 rec.is_delivered = False
+#                 if (rec.qty_delivered >= rec.product_uom_qty) and rec.state not in ['sent', 'draft', 'cancel']:
+#                     rec.is_delivered = True
+#                 else:
+#                     flag = 0
+#                     break
+#             if flag and order.order_line:
+#                 order.is_delivered_fully = True
+#             order.temp_bool = True
 
     def action_mark_as_done(self):
         self.picking_ids.filtered(lambda x: x.state not in ['done', 'cancel']).action_cancel()
-#         for rec in order.order_line:
-#             rec.is_delivered = True
+        self.is_delivered_fully = True
+        for rec in self.order_line:
+            rec.is_delivered = True
+            
